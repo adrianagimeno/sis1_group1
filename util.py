@@ -21,7 +21,7 @@ def load_audio(filepath):
   return data, sr
  
 def plot_audio(t, y, name='audio signal'):
-    if x is not list:
+    if y is not list:
         data_plot = [
             go.Scatter(
                 x=t, y=y, name=name
