@@ -48,3 +48,35 @@ def plot_audio(y, sr, t_start=0, t_end=-1, name='audio signal'):
             )    
         )
     iplot(data_plot)
+
+
+def plot_spectrogram(ff, tt, S):
+  S = librosa.power_to_db(S)
+  plt.pcolormesh(tt, ff, S, shading='gouraud')
+  plt.ylabel('Frequency [Hz]')
+  plt.xlabel('Time [sec]')
+
+def plot_mean_spectrogram(S, sr, n_fft):
+  freqs = np.linspace(0, sr/2 - sr/n_fft, int(n_fft/2+1))
+
+  if type(S) is not list:
+    mean_spec = np.mean(S, axis=1)
+
+    data_plot = [
+        go.Scatter(
+            x=freqs, y=np.sqrt(mean_spec/np.amax(mean_spec)), mode='lines+markers'
+        )
+    ]
+
+  else:
+    data_plot = []
+    for j in range(len(S)):
+      mean_spec = np.mean(S[j], axis=1)
+      data_plot.append(
+        go.Scatter(
+            x=freqs, y=np.sqrt(mean_spec/np.amax(mean_spec)), mode='lines+markers', name=str(j)
+        )
+      )
+  fig = go.Figure(data_plot)
+  fig.update_yaxes(type="log")
+  fig.show()
