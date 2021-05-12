@@ -20,19 +20,31 @@ def load_audio(filepath):
 
   return data, sr
  
-def plot_audio(t, y, name='audio signal'):
-    if y is not list:
-        data_plot = [
-            go.Scatter(
-                x=t, y=y, name=name
-            )    
-        ]
+def plot_audio(y, sr, t_start=0, t_end=-1, name='audio signal'):
+    if type(y) is not list:
+        y = [y]
+
+    if type(name) is not list:
+        names = [name + ' ' + str(j) for j in range(len(y))]
     else:
-        data_plot = []
-        for j in range(y):
-            data_plot.append(
-                go.Scatter(
-                    x=t, y=y[j], name="{} {:d}".format(name, j)
-                )    
-            )
+        assert len(name) == len(y)
+        names = name
+
+    Ts = 1/sr
+
+    t = np.linspace(0, len(y[0])*Ts, len(y[0]))
+
+    if t_end == -1:
+        t_end = len(y[0])*Ts
+
+    samples_start = int(t_start*sr)
+    samples_end = int(t_end*sr)
+
+    data_plot = []
+    for j in range(len(y)):
+        data_plot.append(
+            go.Scatter(
+                x=t[samples_start:samples_end], y=y[j][samples_start:samples_end], name=names[j]
+            )    
+        )
     iplot(data_plot)
