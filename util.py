@@ -19,8 +19,11 @@ def load_audio(filepath):
   data = data - np.mean(data)
 
   return data, sr
- 
-def plot_audio(y, sr, t_start=0, t_end=-1, name='audio signal'):
+
+def save_audio(filepath, data, samplerate):
+  sf.write(filepath, data, samplerate)
+
+def plot_signals(y, sr, t_start=0, t_end=-1, name='audio signal'):
     if type(y) is not list:
         y = [y]
 
