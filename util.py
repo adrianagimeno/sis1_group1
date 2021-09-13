@@ -137,4 +137,9 @@ def plot_complex(z, name='z'):
 
   fig.update_layout(
     annotations=arrows,)
+  
+  fig.update_yaxes(
+    scaleanchor = "x",
+    scaleratio = 1,
+  )
   fig.show()
