@@ -84,6 +84,33 @@ def plot_mean_spectrogram(S, sr, n_fft):
   fig.update_yaxes(type="log")
   fig.show()
 
+def plot_spectrum_at(ff, tt, S, time):
+
+  if type(S) is not list:
+    time_hop = np.argmin((tt - time)**2)
+    
+    fft = S[:, time_hop]
+
+    data_plot = [
+        go.Scatter(
+            x=ff, y=np.sqrt(fft/np.amax(fft)), mode='lines+markers'
+        )
+    ]
+
+  else:
+    data_plot = []
+    time_hop = np.argmin((tt - time)**2)
+    for j in range(len(S)):
+      fft = S[j][:, time_hop]
+      data_plot.append(
+        go.Scatter(
+            x=ff, y=np.sqrt(fft/np.amax(fft)), mode='lines+markers', name=str(j)
+        )
+      )
+  fig = go.Figure(data_plot)
+  fig.update_yaxes(type="log")
+  fig.show()
+  
 def plot_complex(z, name='z'):
 
   if type(z) is not list:
