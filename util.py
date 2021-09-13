@@ -83,3 +83,58 @@ def plot_mean_spectrogram(S, sr, n_fft):
   fig = go.Figure(data_plot)
   fig.update_yaxes(type="log")
   fig.show()
+
+def plot_complex(z, name='z'):
+
+  if type(z) is not list:
+    z = [z]
+
+  if type(name) is not list:
+    names = [name + '_' + str(j) for j in range(len(z))]
+  else:
+    assert len(name) == len(z)
+    names = name  
+
+  omega = np.linspace(0, 2*np.pi, 1000)
+  data_plot = [
+    go.Scatter(
+      x=np.cos(omega), y=np.sin(omega), mode='lines', name='unit circle',
+      line = dict(shape='linear', color='rgb(150,150,150)', dash='dash')
+    )
+  ]
+
+  arrows = []
+  for i, z_i in enumerate(z):
+    data_plot.append(
+      go.Scatter(
+        x=[np.real(z_i)], y=[np.imag(z_i)],
+        mode='markers',
+        name=names[i], 
+        marker={
+        'color': colors[i % len(colors)]}
+      )
+    )
+    arrows.append(
+      go.layout.Annotation(dict(
+                x= np.real(z_i),
+                y= np.imag(z_i),
+                showarrow=True,
+                axref = "x", ayref='y',
+                text="",
+                ax= 0,
+                ay= 0,
+                arrowhead = 3,
+                arrowwidth=1.5,
+                arrowcolor=colors[i % len(colors)],)
+      )
+    )
+
+  fig = go.Figure(data_plot)
+  fig.update_layout(
+    xaxis_title="Real",
+    yaxis_title="Imaginary",
+  )
+
+  fig.update_layout(
+    annotations=arrows,)
+  fig.show()
