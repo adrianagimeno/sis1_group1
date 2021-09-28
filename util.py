@@ -62,7 +62,8 @@ def plot_signals(y, sr, t_start=0, t_end=-1, name='audio signal'):
             go.Scatter(
                 x=t[samples_start:samples_end],
                 y=y[j][samples_start:samples_end],
-                name=names[j]
+                name=names[j],
+                line=dict(shape='linear', color=colors[j % len(colors)])
             )
         )
     iplot(data_plot)
@@ -152,7 +153,7 @@ def plot_complex(z, name='z'):
             y=np.sin(omega),
             mode='lines',
             name='unit circle',
-            line = dict(shape='linear', color='rgb(150,150,150)', dash='dash')
+            line=dict(shape='linear', color='rgb(150,150,150)', dash='dash')
         )
     ]
     arrows = []
@@ -161,9 +162,8 @@ def plot_complex(z, name='z'):
             go.Scatter(
                 x=[np.real(z_i)], y=[np.imag(z_i)],
                 mode='markers',
-                name=names[i], 
-                marker={
-                'color': colors[i % len(colors)]}
+                name=names[i],
+                marker={'color': colors[i % len(colors)]}
             )
         )
         arrows.append(
