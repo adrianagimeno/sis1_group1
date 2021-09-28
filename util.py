@@ -86,7 +86,8 @@ def plot_mean_spectrogram(S, sr, n_fft):
             go.Scatter(
                 x=freqs,
                 y=np.sqrt(mean_spec/np.amax(mean_spec)),
-                mode='lines+markers'
+                mode='lines+markers',
+                line=dict(shape='linear', color=colors[0])
             )
         ]
     else:
@@ -98,7 +99,8 @@ def plot_mean_spectrogram(S, sr, n_fft):
                     x=freqs,
                     y=np.sqrt(mean_spec/np.amax(mean_spec)),
                     mode='lines+markers',
-                    name=str(j)
+                    name=str(j),
+                    line=dict(shape='linear', color=colors[j % len(colors)])
                 )
             )
     fig = go.Figure(data_plot)
@@ -114,7 +116,10 @@ def plot_spectrum_at(ff, tt, S, time):
 
         data_plot = [
             go.Scatter(
-                x=ff, y=np.sqrt(fft/np.amax(fft)), mode='lines+markers'
+                x=ff,
+                y=np.sqrt(fft/np.amax(fft)),
+                mode='lines+markers',
+                line=dict(shape='linear', color=colors[0])
             )
         ]
 
@@ -128,7 +133,8 @@ def plot_spectrum_at(ff, tt, S, time):
                     x=ff,
                     y=np.sqrt(fft/np.amax(fft)),
                     mode='lines+markers',
-                    name=str(j)
+                    name=str(j),
+                    line=dict(shape='linear', color=colors[j % len(colors)])
                 )
             )
     fig = go.Figure(data_plot)
