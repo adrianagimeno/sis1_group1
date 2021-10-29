@@ -36,7 +36,7 @@ def save_audio(filepath, data, samplerate):
     sf.write(filepath, data, samplerate)
 
 
-def plot_signals(y, sr, t_start=0, t_end=-1, name='audio signal'):
+def plot_signals(y, sr, t_start=0, t_end=-1, name='audio signal', mode='lines'):
     if type(y) is not list:
         y = [y]
 
@@ -63,6 +63,7 @@ def plot_signals(y, sr, t_start=0, t_end=-1, name='audio signal'):
                 x=t[samples_start:samples_end],
                 y=y[j][samples_start:samples_end],
                 name=names[j],
+                mode=mode,
                 line=dict(shape='linear', color=colors[j % len(colors)])
             )
         )
