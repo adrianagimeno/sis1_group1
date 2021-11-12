@@ -4,6 +4,7 @@ import numpy as np
 import librosa
 from plotly.offline import iplot
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
 colors = [
     '#1f77b4',
