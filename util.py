@@ -201,3 +201,35 @@ def plot_complex(z, name='z'):
         scaleratio=1,
     )
     fig.show()
+
+
+def plot_frequency_response(w, H):
+    fig = make_subplots(rows=2, cols=1)
+    fig.add_trace(
+        go.Scatter(x=w, y=np.abs(H), name="Magnitude"),
+    row=1, col=1
+    )
+
+    fig.add_trace(
+        go.Scatter(x=w, y=np.angle(H), name='Phase'),
+        row=2, col=1
+    )
+
+    fig.update_xaxes(
+        title_text="Normalized Radian Frequency", row=2, col=1,
+        tickmode = 'array',
+        tickvals = [-np.pi, -3*np.pi/4, -np.pi/2, -np.pi/4, 0, np.pi/4, np.pi/2, 3*np.pi/4,np.pi],
+        ticktext = ['$-\pi$', '$-3\pi/4$', '$-\pi/2$', '$-\pi/4$', '$0$', '$\pi/4$', '$\pi/2$', '$3\pi/4$', '$\pi$']
+    )
+    fig.update_xaxes(
+        row=1, col=1,
+        tickmode = 'array',
+        tickvals = [-np.pi, -3*np.pi/4, -np.pi/2, -np.pi/4, 0, np.pi/4, np.pi/2, 3*np.pi/4,np.pi],
+        ticktext = ['$-\pi$', '$-3\pi/4$', '$-\pi/2$', '$-\pi/4$', '$0$', '$\pi/4$', '$\pi/2$', '$3\pi/4$', '$\pi$']
+    )
+    fig.update_yaxes(title_text="Phase <H", row=2, col=1)
+    fig.update_yaxes(title_text="Magnitude |H|", row=1, col=1)
+    fig.update_layout(
+        title="Frequency Response",
+    )
+    fig.show()
