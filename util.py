@@ -235,6 +235,7 @@ def plot_frequency_response(w, H):
     )
     fig.show()
 
+
 def plot_zeros_poles(z, p):
     z = np.asarray(z)
     p = np.asarray(p)
@@ -250,40 +251,38 @@ def plot_zeros_poles(z, p):
             line=dict(shape='linear', color='rgb(150,150,150)', dash='dash')
         )
     ]
-    arrows = []
-    for i, z_i in enumerate(z):
-        data_plot.append(
-            go.Scatter(
-                x=[np.real(z_i)], y=[np.imag(z_i)],
-                mode='markers',
-                marker={
-                  'color': colors[i % len(colors)],
-                  'symbol': 'circle',
-                  'size': 14
-                }
-            )
-        )
 
-    for i, p_i in enumerate(p):
-        data_plot.append(
-            go.Scatter(
-                x=[np.real(p_i)], y=[np.imag(p_i)],
-                mode='markers',
-                marker={
-                  'color': colors[i % len(colors)],
-                  'symbol': 'x',
-                  'size': 14
-                }
-            )
+    data_plot.append(
+        go.Scatter(
+            x=np.real(z), y=np.imag(z),
+            mode='markers',
+            name = 'zeros',
+            marker={
+              'color': colors[0],
+              'symbol': 'circle',
+              'size': 14
+            }
         )
+    )
+
+    data_plot.append(
+        go.Scatter(
+            x=np.real(p), y=np.imag(p),
+            mode='markers',
+            name = 'poles',
+            marker={
+              'color': colors[1],
+              'symbol': 'x',
+              'size': 14
+            }
+        )
+    )
 
     fig = go.Figure(data_plot)
     fig.update_layout(
         xaxis_title="Real",
         yaxis_title="Imaginary",
     )
-
-    fig.update_layout(showlegend=False)
 
     fig.update_yaxes(
         scaleanchor="x",
