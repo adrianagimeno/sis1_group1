@@ -234,3 +234,59 @@ def plot_frequency_response(w, H):
         title="Frequency Response",
     )
     fig.show()
+
+def plot_zeros_poles(z, p):
+    z = np.asarray(z)
+    p = np.asarray(p)
+
+    omega = np.linspace(0, 2*np.pi, 1000)
+
+    data_plot = [
+        go.Scatter(
+            x=np.cos(omega),
+            y=np.sin(omega),
+            mode='lines',
+            name='unit circle',
+            line=dict(shape='linear', color='rgb(150,150,150)', dash='dash')
+        )
+    ]
+    arrows = []
+    for i, z_i in enumerate(z):
+        data_plot.append(
+            go.Scatter(
+                x=[np.real(z_i)], y=[np.imag(z_i)],
+                mode='markers',
+                marker={
+                  'color': colors[i % len(colors)],
+                  'symbol': 'circle',
+                  'size': 14
+                }
+            )
+        )
+
+    for i, p_i in enumerate(p):
+        data_plot.append(
+            go.Scatter(
+                x=[np.real(p_i)], y=[np.imag(p_i)],
+                mode='markers',
+                marker={
+                  'color': colors[i % len(colors)],
+                  'symbol': 'x',
+                  'size': 14
+                }
+            )
+        )
+
+    fig = go.Figure(data_plot)
+    fig.update_layout(
+        xaxis_title="Real",
+        yaxis_title="Imaginary",
+    )
+
+    fig.update_layout(showlegend=False)
+
+    fig.update_yaxes(
+        scaleanchor="x",
+        scaleratio=1,
+    )
+    fig.show()
